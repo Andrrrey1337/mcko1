@@ -1,0 +1,57 @@
+'''
+#2
+f = open('vacancy.csv', encoding='utf-8')
+f.readline()
+a = [i.strip('\n').split(';') for i in f]
+a = sorted(a, key=lambda x: int(x[2]))
+for j in a:
+    if j[3] == 'классный руководитель':
+        print(f'В компании {j[4]} есть заданная профессия: {j[3]}, з/п в такой компании составит: {j[0]}')
+        break
+
+
+# 3
+f = open('vacancy.csv', encoding='utf-8')
+f.readline()
+a = [i.strip('\n').split(';') for i in f]
+v = input()
+while v != 'None':
+    flag = 1
+    for j in a:
+        if j[4] == v:
+            print(f'В компании {j[4]} есть заданная профессия: {j[3]}, з/п в такой компании составит: {j[0]}')
+            flag = 0
+    if flag:
+        print('К сожалению, ничего не удалось найти')
+    v = input()
+
+#4
+f = open('vacancy.csv', encoding='utf-8')
+f.readline()
+a = [i.strip('\n').split(';') for i in f]
+s = {}
+for i in a:
+    if i[1] not in s:
+        s[i[1]] = [int(i[0]),1]
+    else:
+        s[i[1]][0]+=int(i[0])
+        s[i[1]][1] += 1
+for j in s:
+    s[j] = s[j][0]/s[j][1]
+for q in a:
+    q.append(f'{int(q[0])/s[q[1]]*100}%')
+print(a)
+
+
+'''
+# 5
+f = open('vacancy.csv', encoding='utf-8')
+f.readline()
+s = {}
+for i in f:
+    i = i.strip('\n').split(';')
+    if i[4] not in s:
+        s[i[4]] = [[i[3], i[0], i[1]]]
+    else:
+        s[i[4]].append([i[3], i[0], i[1]])
+print(sorted(s.items(), key=lambda x:len(x[1]))[-1][0])
